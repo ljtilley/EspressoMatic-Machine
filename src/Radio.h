@@ -18,6 +18,7 @@ public:
     bool recvSettings();
 private:
     static RF24 _radio;
+    settings_t _settings;
 };
 
 extern RadioClass Radio;

@@ -25,10 +25,12 @@ bool RadioClass::sendStatus() {
 
 bool RadioClass::recvSettings() {
     if(_radio.available()) {
+        _radio.read(&_settings, sizeof(_settings));
     }
     else {
         return false;
     }
+    Settings.update(_settings.brew_temp, _settings.steam_temp, _settings.temp_offset);
     return true;
 }
 
