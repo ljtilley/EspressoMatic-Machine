@@ -5,10 +5,12 @@
 
 #include "Status.h"
 #include "Settings.h"
+#include "printf.h" //needed for RF24 debug messages
 
 //RF24 _radio = RF24(RADIO_CE, RADIO_CS);
 
 RadioClass::RadioClass() {
+    printf_begin(); //start the printf stuff
 }
 
 void RadioClass::radioInit() {

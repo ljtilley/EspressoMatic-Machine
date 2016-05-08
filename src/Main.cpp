@@ -2,11 +2,10 @@
 
 #include "Radio.h"
 #include "Status.h"
-#include "printf.h"
 
 void setup() {
     Serial.begin(9600);
-    printf_begin();
+    //printf_begin();
     Serial.println("trying to start the radio");
     delay(500);
     Radio.radioInit();
