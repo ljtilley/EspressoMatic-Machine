@@ -16,7 +16,7 @@ RadioClass::RadioClass() {
 void RadioClass::radioInit() {
     _radio.begin();
     _radio.setRetries(15,15);
-    _radio.setPayloadSize(sizeof(StatusPacket));
+    _radio.setPayloadSize(sizeof(_settings));
     _radio.openReadingPipe(1, read_pipe);
     _radio.openWritingPipe(write_pipe);
     _radio.startListening();
