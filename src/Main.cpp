@@ -9,9 +9,6 @@ void setup() {
     Serial.println("trying to start the radio");
     delay(500);
     Radio.radioInit();
-    delay(100);
-    Serial.println("Radio started, trying to print debug info");
-    Radio.radioDebug();
 }
 
 void loop() {

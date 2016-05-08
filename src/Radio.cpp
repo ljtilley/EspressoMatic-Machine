@@ -20,6 +20,7 @@ void RadioClass::radioInit() {
     _radio.openReadingPipe(1, read_pipe);
     _radio.openWritingPipe(write_pipe);
     _radio.startListening();
+    _radio.printDetails();
 }
 
 bool RadioClass::sendStatus() {
