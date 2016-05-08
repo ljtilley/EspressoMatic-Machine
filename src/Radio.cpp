@@ -38,13 +38,6 @@ bool RadioClass::recvSettings() {
     else {
         return false;
     }
-    Serial.println("Got some settings:");
-    Serial.print("Brew temp: ");
-    Serial.println(_settings.brew_temp);
-    Serial.print("Steam temp: ");
-    Serial.println(_settings.steam_temp);
-    Serial.print("Temp Offset: ");
-    Serial.println(_settings.temp_offset);
     Settings.update(_settings.brew_temp, _settings.steam_temp, _settings.temp_offset);
     return true;
 }
