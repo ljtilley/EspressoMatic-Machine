@@ -14,10 +14,12 @@ const uint64_t write_pipe = 0xF0F0F0F0D2LL;
 class RadioClass {
 public:
     RadioClass();
+    void radioInit();
     bool sendStatus();
     bool recvSettings();
+    void radioDebug();
 private:
-    static RF24 _radio;
+    RF24 _radio = RF24(9, 10);
     settings_t _settings;
 };
 

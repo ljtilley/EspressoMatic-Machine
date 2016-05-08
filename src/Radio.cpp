@@ -6,11 +6,12 @@
 #include "Status.h"
 #include "Settings.h"
 
-
-
-RF24 RadioClass::_radio(9, 10);
+//RF24 _radio = RF24(RADIO_CE, RADIO_CS);
 
 RadioClass::RadioClass() {
+}
+
+void RadioClass::radioInit() {
     _radio.begin();
     _radio.setRetries(15,15);
     _radio.setPayloadSize(sizeof(StatusPacket));
@@ -25,13 +26,28 @@ bool RadioClass::sendStatus() {
 
 bool RadioClass::recvSettings() {
     if(_radio.available()) {
-        _radio.read(&_settings, sizeof(_settings));
+        Serial.println("We're receiving some stuff, hold on.");
+        while(_radio.available()) {
+            _radio.read(&_settings, sizeof(_settings));
+        }
+
     }
     else {
         return false;
     }
+    Serial.println("Got some settings:");
+    Serial.print("Brew temp: ");
+    Serial.println(_settings.brew_temp);
+    Serial.print("Steam temp: ");
+    Serial.println(_settings.steam_temp);
+    Serial.print("Temp Offset: ");
+    Serial.println(_settings.temp_offset);
     Settings.update(_settings.brew_temp, _settings.steam_temp, _settings.temp_offset);
     return true;
+}
+
+void RadioClass::radioDebug() {
+    _radio.printDetails();
 }
 
 RadioClass Radio;
