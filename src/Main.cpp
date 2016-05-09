@@ -29,4 +29,7 @@ void loop() {
         Serial.print("Temp Offset: ");
         Serial.println(Settings.getTempOffset());
     }
+    // execute state machine
+    // udpate the debug & tuning interface
+    // send the status
 }
