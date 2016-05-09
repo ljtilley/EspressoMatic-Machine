@@ -9,7 +9,7 @@
 
 //RF24 _radio = RF24(RADIO_CE, RADIO_CS);
 
-RadioClass::RadioClass() {
+RadioClass::RadioClass() : _radio(RADIO_CE, RADIO_CS) {
     printf_begin(); //start the printf stuff
 }
 

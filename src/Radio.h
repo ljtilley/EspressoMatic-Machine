@@ -19,7 +19,7 @@ public:
     bool recvSettings();
     void radioDebug();
 private:
-    RF24 _radio = RF24(9, 10);
+    RF24 _radio;
     settings_t _settings;
 };
 
