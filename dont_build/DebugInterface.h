@@ -1,6 +1,6 @@
 #include <Arduino.h>
 
-#ifdef DEBUG_INTERFACE_H_
+#ifndef DEBUG_INTERFACE_H_
 #define DEBUG_INTERFACE_H_
 
 #define AUTO_PRINT_INTERVAL 200  // milliseconds

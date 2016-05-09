@@ -8,11 +8,6 @@ bool printmode = 0;
 
 unsigned long lastUpdateTime = 0;
 
-#define AUTO_PRINT_INTERVAL 200  // milliseconds
-#define MAX_DELTA  100
-#define MIN_DELTA  0.01
-#define PRINT_PLACES_AFTER_DECIMAL 2
-#define BANNER "EspressoMatic Machine 1.0"
 
 // Print the current status to the serial console
 void printStatus() {

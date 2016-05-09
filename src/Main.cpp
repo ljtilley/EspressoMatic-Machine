@@ -31,5 +31,5 @@ void loop() {
     }
     // execute state machine
     // udpate the debug & tuning interface
-    // send the status
+    // send the status every 1 second
 }
