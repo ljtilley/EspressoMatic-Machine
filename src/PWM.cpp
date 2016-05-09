@@ -1,17 +1,16 @@
 #include <Arduino.h>
 #include "PWM.h"
 
+PWMClass::PWMClass() {
+    heaterState = 0;
+}
 
-bool heaterState = 0;
-
-unsigned long heatCurrentTime, heatLastTime;
-
-void setupHeater() {
+void PWMClass::setupHeater() {
   pinMode(HEAT_RELAY_PIN , OUTPUT);
 }
 
 
-void updateHeater() {
+void PWMClass::updateHeater() {
   heatCurrentTime = millis();
   if(heatCurrentTime - heatLastTime >= 1000 or heatLastTime > heatCurrentTime) { //second statement prevents overflow errors
     // begin cycle
@@ -23,7 +22,7 @@ void updateHeater() {
   }
 }
 
-void setHeatPowerPercentage(float power) {
+void PWMClass::setHeatPowerPercentage(float power) {
   if (power <= 0.0) {
     power = 0.0;
   }
@@ -32,14 +31,15 @@ void setHeatPowerPercentage(float power) {
   }
   heatcycles = power;
 }
-//
-float getHeatCycles() {
+
+float PWMClass::getHeatCycles() {
   return heatcycles;
 }
 
-void _turnHeatElementOnOff(boolean on) {
+void PWMClass::_turnHeatElementOnOff(boolean on) {
   digitalWrite(HEAT_RELAY_PIN, on);	//turn pin high
   heaterState = on;
 }
 
+PWMClass PWM;
 // End Heater Control
