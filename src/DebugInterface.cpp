@@ -8,6 +8,61 @@ bool printmode = 0;
 
 unsigned long lastUpdateTime = 0;
 
+#define AUTO_PRINT_INTERVAL 200  // milliseconds
+#define MAX_DELTA  100
+#define MIN_DELTA  0.01
+#define PRINT_PLACES_AFTER_DECIMAL 2
+#define BANNER "EspressoMatic Machine 1.0"
+
+// Print the current status to the serial console
+void printStatus() {
+  // A means for getting feedback on the current system status and controllable parameters
+  Serial.print("Brew temp:");
+  //Serial.println(setpoint);
+  //printFloat(readFloat(ESPRESSO_TEMP_ADDRESS),PRINT_PLACES_AFTER_DECIMAL);
+  //Serial.print(" Steam temp:");
+ // printFloat(readFloat(STEAM_TEMP_ADDRESS),PRINT_PLACES_AFTER_DECIMAL);
+
+  //Serial.print(" Current temp goal:");
+ // printFloat(targetTemp,PRINT_PLACES_AFTER_DECIMAL);
+  Serial.print("Current temp:");
+  //Serial.println(input);
+
+  Serial.print("P: ");
+  //Serial.print(boiler_pid.GetKp());
+  Serial.print(", I: ");
+  //Serial.print(boiler_pid.GetKi());
+  Serial.print(", D: ");
+  //Serial.print(boiler_pid.GetKd());
+  Serial.print(", Output: ");
+  //Serial.print(output);
+  Serial.print(", Delta: ");
+  Serial.println(delta);
+  Serial.println();
+  Serial.println(" \n");
+}
+
+// Print computer-parseable status
+void printStatusForGraph() {
+  //Serial.print(setpoint);
+  //printFloat(targetTemp,PRINT_PLACES_AFTER_DECIMAL);
+  Serial.print(", ");
+  //Serial.print(input);
+  //printFloat(getLastTemp(),PRINT_PLACES_AFTER_DECIMAL);
+  Serial.print(", ");
+  //Serial.print(boiler_pid.GetKp());
+  //printFloat(getP(),PRINT_PLACES_AFTER_DECIMAL);
+  Serial.print(", ");
+  //Serial.print(boiler_pid.GetKi());
+  //printFloat(getI(),PRINT_PLACES_AFTER_DECIMAL);
+  Serial.print(", ");
+  //Serial.print(boiler_pid.GetKd());
+  //printFloat(getD(),PRINT_PLACES_AFTER_DECIMAL);
+  Serial.print(", ");
+  //Serial.print(getHeatCycles());
+  Serial.println();
+}
+
 // Serial interface init
 void setupSerialInterface()  {
   Serial.begin(115200);
@@ -41,40 +96,40 @@ void updateSerialInterface() {
   while(Serial.available()){
     incomingByte = Serial.read();
     if (incomingByte == 'R') {
-      boiler_pid.SetTunings(Kp, Ki, Kd);
-      setpoint = 200.0; // here too
+      //boiler_pid.SetTunings(Kp, Ki, Kd);
+      //setpoint = 200.0; // here too
     }
     if (incomingByte == 'P') {
-      boiler_pid.SetTunings(boiler_pid.GetKp() + delta, boiler_pid.GetKi(), boiler_pid.GetKd());
+      //boiler_pid.SetTunings(boiler_pid.GetKp() + delta, boiler_pid.GetKi(), boiler_pid.GetKd());
     }
     if (incomingByte == 'p') {
-      boiler_pid.SetTunings(boiler_pid.GetKp() - delta, boiler_pid.GetKi(), boiler_pid.GetKd());
+      //boiler_pid.SetTunings(boiler_pid.GetKp() - delta, boiler_pid.GetKi(), boiler_pid.GetKd());
     }
     if (incomingByte == 'I') {
-      boiler_pid.SetTunings(boiler_pid.GetKp(), boiler_pid.GetKi() + delta, boiler_pid.GetKd());
+      //boiler_pid.SetTunings(boiler_pid.GetKp(), boiler_pid.GetKi() + delta, boiler_pid.GetKd());
     }
     if (incomingByte == 'i') {
-      boiler_pid.SetTunings(boiler_pid.GetKp(), boiler_pid.GetKi() - delta, boiler_pid.GetKd());
+      //boiler_pid.SetTunings(boiler_pid.GetKp(), boiler_pid.GetKi() - delta, boiler_pid.GetKd());
     }
     if (incomingByte == 'D') {
-      boiler_pid.SetTunings(boiler_pid.GetKp(), boiler_pid.GetKi(), boiler_pid.GetKd() + delta);
+      //boiler_pid.SetTunings(boiler_pid.GetKp(), boiler_pid.GetKi(), boiler_pid.GetKd() + delta);
     }
     if (incomingByte == 'd' ){
-      boiler_pid.SetTunings(boiler_pid.GetKp(), boiler_pid.GetKi(), boiler_pid.GetKd() - delta);
+      //boiler_pid.SetTunings(boiler_pid.GetKp(), boiler_pid.GetKi(), boiler_pid.GetKd() - delta);
     }
     if (incomingByte == 'T') {
-      setpoint = setpoint + delta;
+      //setpoint = setpoint + delta;
       Serial.print("Brew temp: ");
-      Serial.print(setpoint);
+      //Serial.print(setpoint);
       //printFloat(readFloat(ESPRESSO_TEMP_ADDRESS),PRINT_PLACES_AFTER_DECIMAL);
       Serial.println("");
     }
     if (incomingByte == 't') {
-      if (setpoint - delta >= 0) {
-        setpoint = setpoint - delta;
-      }
+    //   if (setpoint - delta >= 0) {
+    //     setpoint = setpoint - delta;
+    //   }
       Serial.print("Brew temp: ");
-      Serial.print(setpoint);
+      //Serial.print(setpoint);
       //printFloat(readFloat(ESPRESSO_TEMP_ADDRESS),PRINT_PLACES_AFTER_DECIMAL);
       Serial.println("");
     }
@@ -117,13 +172,13 @@ void updateSerialInterface() {
     }
     if (incomingByte == 'b') {
       Serial.print("P: ");
-      Serial.println(boiler_pid.GetKp());
+      //Serial.println(boiler_pid.GetKp());
       Serial.print("I: ");
-      Serial.println(boiler_pid.GetKi());
+      //Serial.println(boiler_pid.GetKi());
       Serial.print("D: ");
-      Serial.println(boiler_pid.GetKd());
+      //Serial.println(boiler_pid.GetKd());
       Serial.print("Output: ");
-      Serial.println(output);
+      //Serial.println(output);
       Serial.println();
     }
   }
@@ -142,53 +197,4 @@ void updateSerialInterface() {
       }
     }
   }
-}
-
-// Print the current status to the serial console
-void printStatus() {
-  // A means for getting feedback on the current system status and controllable parameters
-  Serial.print("Brew temp:");
-  Serial.println(setpoint);
-  //printFloat(readFloat(ESPRESSO_TEMP_ADDRESS),PRINT_PLACES_AFTER_DECIMAL);
-  //Serial.print(" Steam temp:");
- // printFloat(readFloat(STEAM_TEMP_ADDRESS),PRINT_PLACES_AFTER_DECIMAL);
-
-  //Serial.print(" Current temp goal:");
- // printFloat(targetTemp,PRINT_PLACES_AFTER_DECIMAL);
-  Serial.print("Current temp:");
-  Serial.println(input);
-
-  Serial.print("P: ");
-  Serial.print(boiler_pid.GetKp());
-  Serial.print(", I: ");
-  Serial.print(boiler_pid.GetKi());
-  Serial.print(", D: ");
-  Serial.print(boiler_pid.GetKd());
-  Serial.print(", Output: ");
-  Serial.print(output);
-  Serial.print(", Delta: ");
-  Serial.println(delta);
-  Serial.println();
-  Serial.println(" \n");
-}
-
-// Print computer-parseable status
-void printStatusForGraph() {
-  Serial.print(setpoint);
-  //printFloat(targetTemp,PRINT_PLACES_AFTER_DECIMAL);
-  Serial.print(", ");
-  Serial.print(input);
-  //printFloat(getLastTemp(),PRINT_PLACES_AFTER_DECIMAL);
-  Serial.print(", ");
-  Serial.print(boiler_pid.GetKp());
-  //printFloat(getP(),PRINT_PLACES_AFTER_DECIMAL);
-  Serial.print(", ");
-  Serial.print(boiler_pid.GetKi());
-  //printFloat(getI(),PRINT_PLACES_AFTER_DECIMAL);
-  Serial.print(", ");
-  Serial.print(boiler_pid.GetKd());
-  //printFloat(getD(),PRINT_PLACES_AFTER_DECIMAL);
-  Serial.print(", ");
-  Serial.print(getHeatCycles());
-  Serial.println();
 }

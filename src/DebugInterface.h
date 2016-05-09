@@ -17,17 +17,18 @@ extern bool printmode;
 extern unsigned long lastUpdateTime;
 
 // Serial interface init
-void setupSerialInterface();
+extern void setupSerialInterface();
 
-void printHelp();
+extern void printHelp();
 
 // Execute serial commands from buffer
-void updateSerialInterface();
-
-// Print the current status to the serial console
-void printStatus();
+extern void updateSerialInterface();
 
 // Print computer-parseable status
-void printStatusForGraph();
+extern void printStatusForGraph();
+
+// Print the current status to the serial console
+extern void printStatus();
+
 
 #endif
