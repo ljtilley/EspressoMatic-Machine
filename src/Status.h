@@ -4,6 +4,8 @@
  *  Created on: Feb 23, 2016
  *      Author: luke
  */
+#include <Arduino.h>
+#include <MAX6675.h>
 
 #ifndef STATUS_H_
 #define STATUS_H_
@@ -15,6 +17,11 @@
 #define STEAM_HEAT 3
 #define STEAM_READY 4
 
+// MAX6675 pins & setup
+#define SO A0
+#define CS A1
+#define CSK A2
+
 struct StatusPacket {
 	short temp, state;
 };
@@ -24,11 +31,12 @@ public:
 	//public stuff
 	StatusClass();
 	void refresh();
-	int getTemp();
+	short getTemp();
 	short getState();
     StatusPacket getStatusPacket();
 private:
 	StatusPacket _status;
+	MAX6675 _tempsensor;
 	//private stuff;
 };
 

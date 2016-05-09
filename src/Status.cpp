@@ -1,15 +1,15 @@
 #include "Status.h"
 
-StatusClass::StatusClass() {
+StatusClass::StatusClass() : _tempsensor(CSK, CS, SO) {
 
 }
 
 void StatusClass::refresh() {
-
+    _status.temp = (short)_tempsensor.readFarenheit(); //have to convert readFarenheit output to short
 }
 
-int StatusClass::getTemp() {
-    return 99;
+short StatusClass::getTemp() {
+    return _status.temp;
 }
 
 short StatusClass::getState() {
