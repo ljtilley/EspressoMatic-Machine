@@ -34,9 +34,12 @@ public:
 	short getTemp();
 	short getState();
     StatusPacket getStatusPacket();
+	long getLastSendTime();
+	void setLastSendTime(long time);
 private:
 	StatusPacket _status;
 	MAX6675 _tempsensor;
+	long _last_send_time;
 	//private stuff;
 };
 

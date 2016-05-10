@@ -24,7 +24,12 @@ void RadioClass::radioInit() {
 }
 
 bool RadioClass::sendStatus() {
-    return true;
+    Status.refresh();
+    StatusPacket status = Status.getStatusPacket();
+    _radio.stopListening();
+    bool success = _radio.write(&status, sizeof(StatusPacket));
+    _radio.startListening();
+    return success;
 }
 
 bool RadioClass::recvSettings() {
