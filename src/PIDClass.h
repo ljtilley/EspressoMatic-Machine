@@ -1,6 +1,6 @@
 #include <Arduino.h>
 #include "Status.h"
-#include "PID_v2.h"
+#include <PID_v2.h>
 
 #ifndef PIDCLASS_H_
 #define PIDCLASS_H_
@@ -15,14 +15,14 @@ public:
     void setSetpoint(double new_setpoint);
     double getSetpoint();
 private:
-    PID _pid;
     double _setpoint, _input, _output;
     double _Kp;
     double _Ki;
     double _Kd;
+    PID _pid;
     long _timeOld, _timeNew, _timer;
 };
 
-extern PIDClass PID;
+extern PIDClass HeaterPID;
 
 #endif
