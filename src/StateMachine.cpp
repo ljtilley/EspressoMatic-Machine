@@ -24,42 +24,44 @@ static void checkSteamButton() {
 State STATE_BREW_HEAT_ENTER() {
     Status.setState(BREW_HEAT);
     digitalWrite(STATE_LED, 0);
-    PID.setSetpoint(double(Settings.getBrewTemp()));
+    //HeaterPID.setSetpoint(double(Settings.getBrewTemp()));
+    Serial.println("Entering BREW HEAT");
 }
 
 State STATE_BREW_HEAT() {
-    PID.updatePID();
+    //HeaterPID.updatePID();
     if(Settings.getBrewTemp() - Status.getTemp() <= 3 && Settings.getBrewTemp() - Status.getTemp() >= -3) {
         BrewState.Set(STATE_BREW_READY_ENTER, STATE_BREW_READY);
     }
-    checkSteamButton();
+    // checkSteamButton();
 }
 
 State STATE_BREW_READY_ENTER() {
+    Serial.println("Entering BREW READY");
     Status.setState(BREW_READY);
     digitalWrite(STATE_LED, 1);
 }
 
 State STATE_BREW_READY() {
-    PID.updatePID();
-    if(Settings.getBrewTemp() - Status.getTemp() >= 3 && Settings.getBrewTemp() - Status.getTemp() <= -3) {
+    // HeaterPID.updatePID();
+    if(!(Settings.getBrewTemp() - Status.getTemp() <= 3 && Settings.getBrewTemp() - Status.getTemp() >= -3)) {
         BrewState.Set(STATE_BREW_HEAT_ENTER, STATE_BREW_HEAT);
     }
-    checkSteamButton();
+    // // checkSteamButton();
 }
 
 State STATE_STEAM_HEAT_ENTER() {
     Status.setState(STEAM_HEAT);
     digitalWrite(STATE_LED, 0);
-    PID.setSetpoint(double(Settings.getSteamTemp()));
+    HeaterPID.setSetpoint(double(Settings.getSteamTemp()));
 }
 
 State STATE_STEAM_HEAT() {
-    PID.updatePID();
+    //HeaterPID.updatePID();
     if(Settings.getSteamTemp() - Status.getTemp() <= 3 && Settings.getSteamTemp() - Status.getTemp() >= -3) {
         BrewState.Set(STATE_STEAM_READY_ENTER, STATE_STEAM_READY);
     }
-    checkSteamButton();
+    // checkSteamButton();
 }
 
 State STATE_STEAM_READY_ENTER() {
@@ -68,9 +70,9 @@ State STATE_STEAM_READY_ENTER() {
 }
 
 State STATE_STEAM_READY() {
-    PID.updatePID();
+    //HeaterPID.updatePID();
     if(Settings.getSteamTemp() - Status.getTemp() >= 3 && Settings.getSteamTemp() - Status.getTemp() <= -3) {
         BrewState.Set(STATE_STEAM_HEAT_ENTER, STATE_STEAM_HEAT);
     }
-    checkSteamButton();
+    // checkSteamButton();
 }
