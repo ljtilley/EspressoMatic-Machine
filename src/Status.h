@@ -32,6 +32,7 @@ public:
 	StatusClass();
 	void refresh();
 	short getTemp();
+	void setState(short state);
 	short getState();
     StatusPacket getStatusPacket();
 	long getLastSendTime();

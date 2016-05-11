@@ -6,12 +6,15 @@ StatusClass::StatusClass() : _tempsensor(CSK, CS, SO) {
 
 void StatusClass::refresh() {
     _status.temp = (short)_tempsensor.readFarenheit(); //have to convert readFarenheit output to short
-    _status.state = BREW_HEAT;
 }
 
 short StatusClass::getTemp() {
     refresh();
     return _status.temp;
+}
+
+void StatusClass::setState(short state) {
+    _status.state = state;
 }
 
 short StatusClass::getState() {
