@@ -4,8 +4,10 @@
 #include "Status.h"
 #include "Settings.h"
 #include "StateMachine.h"
+#include "HardwareDefines.h"
 
 void setup() {
+    pinMode(STATE_LED, OUTPUT);
     Serial.begin(57600);
     delay(500);
     Serial.println("Here are the settings that are loaded:");
@@ -32,7 +34,7 @@ void loop() {
     }
     EXEC(BrewState);
     // udpate the debug & tuning interface
-    if (millis() - Status.getLastSendTime() >= 1000) {
+    if (millis() - Status.getLastSendTime() >= 200) {
         Serial.print("Current Status: ");
         Serial.print(Status.getTemp());
         Serial.print(", ");
