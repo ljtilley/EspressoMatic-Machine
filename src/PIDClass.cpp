@@ -27,7 +27,7 @@ void PIDClass::updatePID() {
 
     // Run low-frequency updates
     if(_timer>300){
-    _input = double(Status.getTemp()); // update LCD to reflect temp changes
+    _input = double(Status.getTemp());
     _timer=0;
     }
 
