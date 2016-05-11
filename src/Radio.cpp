@@ -15,6 +15,7 @@ RadioClass::RadioClass() : _radio(RADIO_CE, RADIO_CS) {
 
 void RadioClass::radioInit() {
     _radio.begin();
+    _radio.setDataRate(RF24_250KBPS);
     _radio.setRetries(15,15);
     _radio.setPayloadSize(sizeof(_settings));
     _radio.openReadingPipe(1, read_pipe);
@@ -27,12 +28,15 @@ bool RadioClass::sendStatus() {
     Status.refresh();
     StatusPacket status = Status.getStatusPacket();
     _radio.stopListening();
+    _radio.setPayloadSize(sizeof(status));
     bool success = _radio.write(&status, sizeof(StatusPacket));
+    _radio.setPayloadSize(sizeof(_settings));
     _radio.startListening();
     return success;
 }
 
 bool RadioClass::recvSettings() {
+
     if(_radio.available()) {
         Serial.println("We're receiving some stuff, hold on.");
         while(_radio.available()) {
