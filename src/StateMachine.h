@@ -1,0 +1,15 @@
+#include <SM.h>
+
+extern SM BrewState;
+
+State STATE_BREW_HEAT_ENTER();
+State STATE_BREW_HEAT();
+
+State STATE_BREW_READY_ENTER();
+State STATE_BREW_READY();
+
+State STATE_STEAM_HEAT_ENTER();
+State STATE_STEAM_HEAT();
+
+State STATE_STEAM_READY_ENTER();
+State STATE_STEAM_READY();

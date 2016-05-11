@@ -3,6 +3,7 @@
 #include "Radio.h"
 #include "Status.h"
 #include "Settings.h"
+#include "StateMachine.h"
 
 void setup() {
     Serial.begin(57600);
@@ -29,7 +30,7 @@ void loop() {
         Serial.print("Temp Offset: ");
         Serial.println(Settings.getTempOffset());
     }
-    // execute state machine
+    EXEC(BrewState);
     // udpate the debug & tuning interface
     if (millis() - Status.getLastSendTime() >= 1000) {
         Serial.print("Current Status: ");
